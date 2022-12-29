@@ -5,17 +5,22 @@ services:
     image: nginx
     ports:
       - "80:80"
+      - "443:443"
+    environment:
+      TZ: Asia/Seoul
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /var/log/nginx:/var/log/nginx
     depends_on:
-      - parting_spring_dev
-      - parting_spring_prod
+      - spring_dev
+      - spring_prod
     networks:
       - dev_network
       - prod_network
 
 ##### dev
-  parting_mysql_dev:
+  mysql_dev:
     image: mysql:8.0.31
     expose:
       - ${MYSQL_PORT}
@@ -27,7 +32,7 @@ services:
     networks:
       - dev_network
 
-  parting_spring_dev:
+  spring_dev:
     build:
       context: ./
       dockerfile: Dockerfile
@@ -36,13 +41,13 @@ services:
     environment:
       MODE: dev
     depends_on:
-      - parting_mysql_dev
+      - mysql_dev
     restart: always
     networks:
       - dev_network
 
 ##### prod
-  parting_mysql_prod:
+  mysql_prod:
     image: mysql:8.0.31
     expose:
       - ${MYSQL_PORT}
@@ -54,7 +59,7 @@ services:
     networks:
       - prod_network
 
-  parting_spring_prod:
+  spring_prod:
     build:
       context: ./
       dockerfile: Dockerfile
@@ -63,7 +68,7 @@ services:
     environment:
       MODE: prod
     depends_on:
-      - parting_mysql_prod
+      - mysql_prod
     restart: always
     networks:
       - prod_network
