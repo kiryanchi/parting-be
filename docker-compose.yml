@@ -30,7 +30,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ./${DB_VOLUMES_PATH}_dev:/var/lib/mysql
+      - ${DB_VOLUMES_PATH}_dev:/var/lib/mysql
     networks:
       - dev_network
 
@@ -59,7 +59,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ./${DB_VOLUMES_PATH}_prod:/var/lib/mysql
+      - ${DB_VOLUMES_PATH}_prod:/var/lib/mysql
     networks:
       - prod_network
 
