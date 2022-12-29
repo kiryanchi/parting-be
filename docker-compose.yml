@@ -1,0 +1,87 @@
+version: "3.7"
+
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - parting_spring_dev
+      - parting_spring_prod
+    networks:
+      - dev_network
+      - prod_network
+
+##### dev
+  parting_mysql_dev:
+    image: mysql:8.0.31
+    expose:
+      - ${MYSQL_PORT}
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./${DB_VOLUMES_PATH}_dev:/var/lib/mysql
+    networks:
+      - dev_network
+
+  parting_spring_dev:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    expose:
+      - 8080
+    environment:
+      MODE: dev
+    depends_on:
+      - parting_mysql_dev
+    restart: always
+    networks:
+      - dev_network
+
+##### prod
+  parting_mysql_prod:
+    image: mysql:8.0.31
+    expose:
+      - ${MYSQL_PORT}
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./${DB_VOLUMES_PATH}_prod:/var/lib/mysql
+    networks:
+      - prod_network
+
+  parting_spring_prod:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    expose:
+      - 8080
+    environment:
+      MODE: prod
+    depends_on:
+      - parting_mysql_prod
+    restart: always
+    networks:
+      - prod_network
+
+##### local
+  parting_spring_local:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8088:8088"
+    environment:
+      MODE: local
+    networks:
+      - default
+
+networks:
+  dev_network:
+    driver: bridge
+  prod_network:
+    driver: bridge

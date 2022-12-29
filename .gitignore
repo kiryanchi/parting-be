@@ -36,6 +36,17 @@ out/
 ### VS Code ###
 .vscode/
 
+### DS_Store ###
 .DS_Store
 
+### application ###
 application-*.yml
+
+### .env ###
+.env
+
+### server files ###
+nginx/
+
+### DB ###
+parting_mysql_db*
