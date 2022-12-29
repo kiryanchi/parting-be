@@ -2,6 +2,7 @@ version: "3.7"
 
 services:
   nginx:
+    container_name: nginx
     image: nginx
     ports:
       - "80:80"
@@ -21,6 +22,7 @@ services:
 
 ##### dev
   mysql_dev:
+    container_name: mysql_dev
     image: mysql:8.0.31
     expose:
       - ${MYSQL_PORT}
@@ -33,6 +35,7 @@ services:
       - dev_network
 
   spring_dev:
+    container_name: spring_dev
     build:
       context: ./
       dockerfile: Dockerfile
@@ -48,6 +51,7 @@ services:
 
 ##### prod
   mysql_prod:
+    container_name: mysql_prod
     image: mysql:8.0.31
     expose:
       - ${MYSQL_PORT}
@@ -60,6 +64,7 @@ services:
       - prod_network
 
   spring_prod:
+    container_name: spring_prod
     build:
       context: ./
       dockerfile: Dockerfile
