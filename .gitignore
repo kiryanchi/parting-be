@@ -50,3 +50,4 @@ nginx/
 
 ### DB ###
 parting_mysql_db*
+data.sql

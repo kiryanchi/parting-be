@@ -8,7 +8,12 @@ import com.appdong.parting.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,7 +29,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public GetPartyDdayRes getPartyDdayByUserId(long userId) {
 
-        UsersEntity usersEntity=userRepository.getReferenceById(userId);
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
+        Date todayDate= java.sql.Date.valueOf(today);
+        System.out.println(todayDate.toString());
+
+        UsersEntity usersEntity=userRepository.getReferenceByIdForDday(userId,todayDate);
+        //Todo usersEntity가 null일 때 error handling
+        //Todo query가 제대로 안된다..?
+
+        System.out.println("Entity");
+        System.out.println(usersEntity);
+
         List<PartyEntity> partyList=new ArrayList<PartyEntity>();
         GetPartyDdayRes getPartyDdayRes = null;
 
@@ -35,8 +50,7 @@ public class UserServiceImpl implements UserService {
 
         getPartyDdayRes=new GetPartyDdayRes(partyList);
 
-        System.out.println("Entity");
-        System.out.println(usersEntity);
+
         System.out.println("DTO");
         System.out.println(getPartyDdayRes);
         return getPartyDdayRes;
