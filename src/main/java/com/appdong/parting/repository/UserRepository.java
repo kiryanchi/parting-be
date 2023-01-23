@@ -18,4 +18,10 @@ public interface UserRepository extends JpaRepository<UsersEntity, Long> {
             "where u.id=:userId and Date(p.partyStartDateTime)=:today")
     public UsersEntity getReferenceByIdForDday(@Param("userId") long userId, @Param("today") Date today);
 
+
+    @Query("select u from UsersEntity u " +
+            "left join fetch UserPartyMappingEntity upm on upm.users.id=u.id " +
+            "left join fetch PartyEntity p on upm.party.id=p.id " +
+            "where upm.users.id=:userId")
+    public UsersEntity getEnteredParties(@Param("userId") long userId);
 }

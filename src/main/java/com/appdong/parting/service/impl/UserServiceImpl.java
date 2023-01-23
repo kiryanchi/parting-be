@@ -1,6 +1,7 @@
 package com.appdong.parting.service.impl;
 
 import com.appdong.parting.data.dto.GetPartyDdayRes;
+import com.appdong.parting.data.dto.RetrievePartiesByUserIdRes;
 import com.appdong.parting.data.entity.PartyEntity;
 import com.appdong.parting.data.entity.UsersEntity;
 import com.appdong.parting.repository.UserRepository;
@@ -8,9 +9,7 @@ import com.appdong.parting.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,4 +55,26 @@ public class UserServiceImpl implements UserService {
         return getPartyDdayRes;
     }
 
+    @Override
+    public ArrayList<RetrievePartiesByUserIdRes> getEnteredParties(long userId) {
+
+        UsersEntity usersEntity=userRepository.getEnteredParties(userId);
+
+        System.out.println(usersEntity);
+        ArrayList<PartyEntity> partyEntityArrayList=new ArrayList<>();
+
+        for(int i=0; i<usersEntity.getUserpartymappingtableEntityList().size(); i++){
+            partyEntityArrayList.add(usersEntity.getUserpartymappingtableEntityList().get(i).getParty());
+        }
+
+        ArrayList<RetrievePartiesByUserIdRes> retrievePartiesByUserIdResArray=new ArrayList<>();
+        for(int i=0; i<partyEntityArrayList.size();i++){
+            RetrievePartiesByUserIdRes retrievePartiesByUserIdRes=new RetrievePartiesByUserIdRes(partyEntityArrayList.get(i));
+            retrievePartiesByUserIdResArray.add(retrievePartiesByUserIdRes);
+        }
+
+
+
+        return retrievePartiesByUserIdResArray;
+    }
 }

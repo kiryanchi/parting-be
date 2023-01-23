@@ -1,15 +1,14 @@
 package com.appdong.parting.controller;
 
 import com.appdong.parting.data.dto.GetPartyDdayRes;
-import com.appdong.parting.data.dto.GetPartyMakedByMe;
+import com.appdong.parting.data.dto.RetrievePartiesByUserIdRes;
 import com.appdong.parting.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 
 @RestController
 public class UserController {
@@ -35,4 +34,11 @@ public class UserController {
         return userService.getPartyDdayByUserId(userId);
     }
 
+    @GetMapping(value = "/api/entered-party")
+    public ArrayList<RetrievePartiesByUserIdRes> getEnteredParties(){
+
+        long userId=1;
+
+        return userService.getEnteredParties(userId);
+    }
 }
