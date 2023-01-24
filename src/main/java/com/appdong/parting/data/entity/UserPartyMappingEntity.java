@@ -30,4 +30,14 @@ public class UserPartyMappingEntity {
                 ", status='" + status + '\'' +
                 '}';
     }
+
+    public UserPartyMappingEntity() {
+    }
+
+    public UserPartyMappingEntity(UsersEntity users, PartyEntity party, String status) {
+        this.id = id;
+        this.users = users;
+        this.party = party;
+        this.status = status;
+    }
 }
