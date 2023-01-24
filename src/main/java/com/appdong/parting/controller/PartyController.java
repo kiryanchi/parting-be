@@ -1,5 +1,6 @@
 package com.appdong.parting.controller;
 
+import com.appdong.parting.config.BaseResponse;
 import com.appdong.parting.data.dto.GetPartyDetailRes;
 import com.appdong.parting.service.PartyService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -39,5 +40,27 @@ public class PartyController {
         System.out.println("partyId: "+partyId);
 
         return partyService.getPartyDetail(partyId);
+    }
+
+    @ApiOperation(
+            value="party 삭제 기능",
+            notes="partyId를 통해 파티를 삭제한다.\n" +
+                    "party를 직접 개설한 user만 사용할 수 있는 기능이다.\n"+
+                    "현재는 로그인 기능이 구현되어있지 않아 userId를 3으로 고정해놨으며 추후 login token을 전달받아 userId를 뽑아내 사용하는" +
+                    "형태로 변경될 예정이다."
+    )
+    @ApiImplicitParam(
+            name = "partyId"
+            , value = "파티 아이디"
+            , required = true
+            , dataType = "int"
+            , paramType = "path"
+            , defaultValue = "None"
+            , example = "1")
+    @PatchMapping(value="/api/party/{partyId}/status")
+    public BaseResponse deleteParty(@PathVariable long partyId){
+        long userId=1;
+
+        return partyService.deleteParty(userId,partyId);
     }
 }

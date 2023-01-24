@@ -47,7 +47,8 @@ public enum BaseResponseStatus {
 
     PARTY_OR_USER_ID_INVALID(false,5000,"partyId 혹은 userId를 확인해주세요"),
     CAN_NOT_WITHDRAW_HOST(false,5001,"host는 파티를 나갈 수 없습니다. 파티를 삭제해주세요"),
-    USER_NOT_EXIST_IN_PARTY(false,5002,"해당 유저가 해당 파티에 속해있지 않습니다.");
+    USER_NOT_EXIST_IN_PARTY(false,5002,"해당 유저가 해당 파티에 속해있지 않습니다."),
+    USER_IS_NOT_HOST(false,5003,"host유저만이 파티를 삭제할 수 있습니다.");
     private final boolean isSuccess;
     private final int code;
     private final String message;
