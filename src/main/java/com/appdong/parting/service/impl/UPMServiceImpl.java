@@ -13,6 +13,7 @@ import com.appdong.parting.service.UPMService;
 import com.fasterxml.jackson.databind.ser.Serializers;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,5 +63,24 @@ public class UPMServiceImpl implements UPMService {
             System.out.println(e);
             return new BaseResponse<>(BaseResponseStatus.DATABASE_ERROR);
         }
+    }
+
+    public BaseResponse withdrawParty(long userId, long partyId){
+        //Todo host는 못나가도록 설정.
+        try{
+            UserPartyMappingEntity returnEntity=upmRepository.getReferenceByUserIdAndPartyId(userId,partyId);
+            if(returnEntity==null){
+                return new BaseResponse<>(BaseResponseStatus.USER_NOT_EXIST_IN_PARTY);
+            }
+            else if(returnEntity.getStatus().equals("host")){
+                return new BaseResponse<>(BaseResponseStatus.CAN_NOT_WITHDRAW_HOST);
+            }
+            upmRepository.withdrawPartyByUserIdAndPartyId(userId,partyId);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS);
+        }catch(Exception e){
+            System.out.println(e);
+            return new BaseResponse<>(BaseResponseStatus.DATABASE_ERROR);
+        }
+
     }
 }
