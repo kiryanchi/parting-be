@@ -1,6 +1,7 @@
 package com.appdong.parting.controller;
 
 import com.appdong.parting.data.dto.GetPartyDdayRes;
+import com.appdong.parting.data.dto.GetPartyMakedByMe;
 import com.appdong.parting.data.dto.RetrievePartiesByUserIdRes;
 import com.appdong.parting.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -41,4 +42,5 @@ public class UserController {
 
         return userService.getEnteredParties(userId);
     }
+
 }

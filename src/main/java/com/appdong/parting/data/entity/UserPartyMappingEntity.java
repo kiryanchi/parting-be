@@ -23,4 +23,11 @@ public class UserPartyMappingEntity {
 
     private String status;
 
+    @Override
+    public String toString() {
+        return "UserPartyMappingEntity{" +
+                "id=" + id +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

@@ -1,6 +1,7 @@
 package com.appdong.parting.service.impl;
 
 import com.appdong.parting.data.dto.GetPartyDdayRes;
+import com.appdong.parting.data.dto.GetPartyMakedByMe;
 import com.appdong.parting.data.dto.RetrievePartiesByUserIdRes;
 import com.appdong.parting.data.entity.PartyEntity;
 import com.appdong.parting.data.entity.UsersEntity;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
         Date todayDate= java.sql.Date.valueOf(today);
         System.out.println(todayDate.toString());
 
-        UsersEntity usersEntity=userRepository.getReferenceByIdForDday(userId,todayDate);
+        UsersEntity usersEntity=userRepository.getReferenceByIdForDday(userId);
         //Todo usersEntity가 null일 때 error handling
         //Todo query가 제대로 안된다..?
 
@@ -77,4 +78,6 @@ public class UserServiceImpl implements UserService {
 
         return retrievePartiesByUserIdResArray;
     }
+
+
 }
