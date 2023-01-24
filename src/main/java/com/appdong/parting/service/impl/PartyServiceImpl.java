@@ -20,7 +20,6 @@ public class PartyServiceImpl implements PartyService {
     PartyRepository partyRepository;
     UPMRepository upmRepository;
 
-    @Autowired
     public PartyServiceImpl(PartyRepository partyRepository, UPMRepository upmRepository) {
         this.partyRepository = partyRepository;
         this.upmRepository = upmRepository;

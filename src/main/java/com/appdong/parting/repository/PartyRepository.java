@@ -11,7 +11,7 @@ public interface PartyRepository extends JpaRepository<PartyEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query("update PartyEntity p set p.status=:status")
-    void deleteParty(long partyId,String status);
+    @Query("update PartyEntity p set p.status=:status where p.id=:partyId")
+    public void deleteParty(long partyId,String status);
 
 }
