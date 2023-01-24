@@ -10,6 +10,7 @@ import com.appdong.parting.repository.PartyRepository;
 import com.appdong.parting.repository.UPMRepository;
 import com.appdong.parting.repository.UserRepository;
 import com.appdong.parting.service.UPMService;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class UPMServiceImpl implements UPMService {
         this.partyRepository = partyRepository;
     }
 
-    public ArrayList<GetPartyMakedByMe> getPartiesMakedByMe(long userId){
+    public BaseResponse<ArrayList<GetPartyMakedByMe>> getPartiesMakedByMe(long userId){
         List<UserPartyMappingEntity> userPartyMappingEntityList=upmRepository.getPartiesMakedByMe(userId);//잠만 이거 여러개면 어애되는거지?
 
         System.out.println(userPartyMappingEntityList);
@@ -39,7 +40,7 @@ public class UPMServiceImpl implements UPMService {
         }
 
 
-        return getPartyMakedByMeList;
+        return new BaseResponse(getPartyMakedByMeList);
     }
 
     public BaseResponse<String> enterParty(long userId, long partyId){
