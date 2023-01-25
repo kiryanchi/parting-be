@@ -40,7 +40,7 @@ out/
 .DS_Store
 
 ### application ###
-application-*.yml
+application.yml
 
 ### .env ###
 .env

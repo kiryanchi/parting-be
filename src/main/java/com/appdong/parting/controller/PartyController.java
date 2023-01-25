@@ -2,6 +2,7 @@ package com.appdong.parting.controller;
 
 import com.appdong.parting.config.BaseResponse;
 import com.appdong.parting.data.dto.GetPartyDetailRes;
+import com.appdong.parting.data.dto.PostOrUpdatePartyReq;
 import com.appdong.parting.service.PartyService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -78,5 +79,24 @@ public class PartyController {
         long userId=1;
 
         return partyService.deleteParty(userId,partyId);
+    }
+
+    @PutMapping(value="/api/party/{partyId}")
+    public BaseResponse updatePartyInfo(
+            @PathVariable("partyId") long partyId,
+            @RequestBody PostOrUpdatePartyReq updatePartyReq
+    ){
+        long userId=1;
+
+        return partyService.updatePartyInfo(userId,partyId,updatePartyReq);
+    }
+
+    @PostMapping(value="/api/party")
+    public BaseResponse postParty(
+            @RequestBody PostOrUpdatePartyReq postPartyReq
+    ){
+        long userId=1;
+
+        return partyService.postParty(postPartyReq,userId);
     }
 }

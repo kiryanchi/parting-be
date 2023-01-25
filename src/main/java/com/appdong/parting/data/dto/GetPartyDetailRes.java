@@ -1,9 +1,6 @@
 package com.appdong.parting.data.dto;
 
-import com.appdong.parting.data.entity.HashTagsEntity;
-import com.appdong.parting.data.entity.PartyEntity;
-import com.appdong.parting.data.entity.UserPartyMappingEntity;
-import com.appdong.parting.data.entity.UsersEntity;
+import com.appdong.parting.data.entity.*;
 import com.appdong.parting.data.models.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,7 +44,7 @@ public class GetPartyDetailRes {
     List<Member> memberList;
 
     String categoryName;        // 카테고리
-    String categoryDetailName;  // 세부 카테고리
+    List<String> categoryDetailName;  // 세부 카테고리
     List<String> hashTag;
 
     String status; // 모집 완료유무를 가져온다. 모집 완료일경우 "모집 완료"만 표시되면 되고 모집중일 경우 dealine에대한 string이 표시된다.
@@ -61,6 +58,12 @@ public class GetPartyDetailRes {
         List<HashTagsEntity> hashTagsEntityList=partyEntity.getHashTagsEntityList();
         List<String> hashTagNameList=new ArrayList<String>();
 
+        List<String> categoriesDetailNameList=new ArrayList<>();
+        for (PartyCategoryDetailMappingEntity partyCategoryDetailMappingEntity : partyEntity.getPartyCategoryDetailMappingEntities()){
+            String categoryName=partyCategoryDetailMappingEntity.getCategoriesDetail().getCategoryName();
+            categoriesDetailNameList.add(categoryName);
+        }
+
         for (int i=0; i<mappingList.size(); i++){
             if(mappingList.get(i).getStatus().equals("host")){
                 host=mappingList.get(i).getUsers();
@@ -69,10 +72,10 @@ public class GetPartyDetailRes {
             tmpMemberList.add(new Member(mappingList.get(i).getUsers()));
         }
         for(int i=0; i<hashTagsEntityList.size(); i++){
-            hashTagNameList.add(hashTagsEntityList.get(i).getHashtagName());
+            hashTagNameList.add("#"+hashTagsEntityList.get(i).getHashTagName());
         }
         SimpleDateFormat deadLineFormat= new SimpleDateFormat("MM월DD일 a hh:mm 모집 마감");
-        String deadLineFormatStr=deadLineFormat.format(partyEntity.getDeadLine()).replace("오전","AM");
+        String deadLineFormatStr=deadLineFormat.format(partyEntity.getPartyStartDateTime()).replace("오전","AM");
         deadLineFormatStr=deadLineFormatStr.replace("오후","PM");
 
         SimpleDateFormat partyStartTimeFormat=new SimpleDateFormat("yyyy.MM.DD.E- a. hh시");
@@ -100,8 +103,8 @@ public class GetPartyDetailRes {
         this.distanceUnit = null; //Todo 확인필요
         this.partyDescrpiton = partyEntity.getComment();
         this.memberList = tmpMemberList;
-        this.categoryName = partyEntity.getCategoryDetailEntity().getCategoriesEntity().getCategoryName();
-        this.categoryDetailName = partyEntity.getCategoryDetailEntity().getCategoryName();
+        this.categoryName = partyEntity.getPartyCategoryDetailMappingEntities().get(0).getCategoriesDetail().getCategoryName();
+        this.categoryDetailName = categoriesDetailNameList;
         this.hashTag = hashTagNameList;
         this.status = partyEntity.getStatus();
     }

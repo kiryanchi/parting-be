@@ -1,6 +1,8 @@
 package com.appdong.parting.data.entity;
 
+import com.appdong.parting.data.dto.PostOrUpdatePartyReq;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -20,18 +22,14 @@ public class PartyEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="categoryDetailId")
-    private CategoriesDetailEntity categoryDetailEntity;
 
 
     private String partyName;
     private int capacity;
-    private String issecret;
     private Timestamp partyStartDateTime;
     private Timestamp partyEndDateTime;
     private int utmX;               // 경도
-    private int utmY;               // 위도
+    private int utmY;              // 위도
 
     private String address;
     private String storeName;
@@ -41,7 +39,7 @@ public class PartyEntity {
     private int minAge;
     private int maxAge;
 
-    private Timestamp deadLine;
+
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
@@ -53,5 +51,33 @@ public class PartyEntity {
     @OneToMany(mappedBy = "party")
     private List<HashTagsEntity> hashTagsEntityList;
 
+    @OneToMany(mappedBy = "party")
+    private List<PartyCategoryDetailMappingEntity> partyCategoryDetailMappingEntities;
 
+    public PartyEntity(PostOrUpdatePartyReq postPartyReq) {
+        this.partyName=postPartyReq.getPartyName();
+        this.partyStartDateTime=java.sql.Timestamp.valueOf(postPartyReq.getPartyStartDateTime());
+        this.partyEndDateTime=java.sql.Timestamp.valueOf(postPartyReq.getPartyEndDateTime());
+        this.maxAge=postPartyReq.getMaxAge();
+        this.minAge=postPartyReq.getMinAge();
+        this.capacity=postPartyReq.getCapacity();
+        this.comment=postPartyReq.getPartyDescription();
+        this.utmX=postPartyReq.getUtmX();
+        this.utmY=postPartyReq.getUtmY();
+        this.address=postPartyReq.getAddress();
+        this.status="RECRUIT";
+    }
+
+
+    public void update(PostOrUpdatePartyReq updatePartyReq) {
+        this.partyName=updatePartyReq.getPartyName();
+        this.partyStartDateTime= java.sql.Timestamp.valueOf(updatePartyReq.getPartyEndDateTime());
+        this.partyEndDateTime= java.sql.Timestamp.valueOf(updatePartyReq.getPartyEndDateTime());
+        this.maxAge=updatePartyReq.getMaxAge();
+        this.minAge=updatePartyReq.getMinAge();
+        this.comment=updatePartyReq.getPartyDescription();
+        this.utmX=updatePartyReq.getUtmX();
+        this.utmY=updatePartyReq.getUtmY();
+        this.address=updatePartyReq.getAddress();
+    }
 }

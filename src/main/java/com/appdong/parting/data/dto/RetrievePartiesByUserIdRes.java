@@ -36,7 +36,7 @@ public class RetrievePartiesByUserIdRes {
         List<String> hashTagNameList=new ArrayList<String>();
 
         for(int i=0; i<hashTagsEntityList.size(); i++){
-            hashTagNameList.add(hashTagsEntityList.get(i).getHashtagName());
+            hashTagNameList.add(hashTagsEntityList.get(i).getHashTagName());
         }
 
         SimpleDateFormat partyStartTimeFormat=new SimpleDateFormat("yyyy.MM.DD.E- a. hh시");

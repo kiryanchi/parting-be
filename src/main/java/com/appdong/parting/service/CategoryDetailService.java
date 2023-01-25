@@ -1,0 +1,4 @@
+package com.appdong.parting.service;
+
+public interface CategoryDetailService {
+}

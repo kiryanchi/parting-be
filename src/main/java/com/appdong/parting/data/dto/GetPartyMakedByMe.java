@@ -47,7 +47,7 @@ public class GetPartyMakedByMe {
         List<String> hashTagNameList=new ArrayList<String>();
 
         for(int i=0; i<hashTagsEntityList.size(); i++){
-            hashTagNameList.add(hashTagsEntityList.get(i).getHashtagName());
+            hashTagNameList.add("#"+hashTagsEntityList.get(i).getHashTagName());
         }
 
         this.partyId = partyEntity.getId();

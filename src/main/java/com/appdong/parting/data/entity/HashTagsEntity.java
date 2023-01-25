@@ -16,14 +16,23 @@ import java.sql.Timestamp;
 public class HashTagsEntity {
 
     @Id
-    private java.math.BigInteger hashtagId;
+    private long hashtagId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="partyId")
     private PartyEntity party;
 
-    private String hashtagName;
+    private String hashTagName;
     private Timestamp createdAt;
     private String status;
 
+    @Override
+    public String toString() {
+        return "HashTagsEntity{" +
+                "hashtagId=" + hashtagId +
+                ", hashTagName='" + hashTagName + '\'' +
+                ", createdAt=" + createdAt +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }
